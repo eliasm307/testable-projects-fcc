@@ -728,7 +728,23 @@ export default function create25Plus5ClockTests() {
       clicked.`, function () {
         // Call document.getElementById('beep') each time to overcome framework
         // cache
-        document.getElementById('beep').play();
+        
+        // document.getElementById('beep').play();
+        var playPromise = document.getElementById('beep').play(); 
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then(_ => {
+              // Automatic playback started!
+              // Show playing UI.
+              console.log("audio played auto");
+            })
+            .catch(error => {
+              // Auto-play was prevented
+              // Show paused UI.
+              console.log("playback prevented");
+            });
+        }
         resetTimer();
 
         assert.isTrue(
